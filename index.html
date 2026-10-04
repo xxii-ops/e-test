@@ -1,0 +1,1514 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#101010">
+<title>测一测｜如果掉入都市剧，你是什么剧本角色</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    -webkit-tap-highlight-color:transparent;
+}
+
+html,body{
+    width:100%;
+    min-height:100%;
+    font-family:
+        "PingFang SC",
+        "Hiragino Sans GB",
+        "Microsoft YaHei",
+        sans-serif;
+    background:#0b0b0c;
+    color:#f5f1ea;
+}
+
+body{
+    min-height:100vh;
+    overflow-x:hidden;
+}
+
+button,
+input{
+    font-family:inherit;
+}
+
+button{
+    border:none;
+    outline:none;
+    cursor:pointer;
+}
+
+/* =========================
+   全局背景
+========================= */
+
+.app{
+    min-height:100vh;
+    position:relative;
+    overflow:hidden;
+    background:
+        radial-gradient(circle at 15% 10%,rgba(180,150,105,.10),transparent 28%),
+        radial-gradient(circle at 90% 85%,rgba(110,120,145,.09),transparent 30%),
+        linear-gradient(145deg,#0a0a0b,#111112 55%,#09090a);
+}
+
+.app::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    opacity:.045;
+    background-image:
+        linear-gradient(rgba(255,255,255,.15) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.15) 1px,transparent 1px);
+    background-size:4px 4px;
+    mix-blend-mode:soft-light;
+}
+
+/* =========================
+   页面容器
+========================= */
+
+.page{
+    width:100%;
+    max-width:520px;
+    min-height:100vh;
+    margin:0 auto;
+    position:relative;
+    padding:28px 20px 38px;
+}
+
+.hidden{
+    display:none !important;
+}
+
+/* =========================
+   密码页
+========================= */
+
+.lock-page{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.lock-card{
+    width:100%;
+    max-width:390px;
+    text-align:center;
+    padding:42px 28px 38px;
+    border:1px solid rgba(210,180,125,.18);
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.055),
+            rgba(255,255,255,.018)
+        );
+    box-shadow:
+        0 25px 80px rgba(0,0,0,.55),
+        inset 0 1px rgba(255,255,255,.05);
+    backdrop-filter:blur(18px);
+}
+
+.lock-mark{
+    width:58px;
+    height:58px;
+    margin:0 auto 26px;
+    border:1px solid rgba(210,180,125,.48);
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#cbb184;
+    font-size:21px;
+    position:relative;
+}
+
+.lock-mark::before{
+    content:"";
+    position:absolute;
+    inset:7px;
+    border:1px solid rgba(210,180,125,.12);
+    border-radius:50%;
+}
+
+.eyebrow{
+    font-size:10px;
+    letter-spacing:5px;
+    color:#a89d8c;
+    margin-bottom:15px;
+}
+
+.lock-title{
+    font-family:
+        "Songti SC",
+        "STSong",
+        "SimSun",
+        serif;
+    font-size:26px;
+    line-height:1.5;
+    font-weight:400;
+    letter-spacing:1px;
+}
+
+.lock-subtitle{
+    margin-top:13px;
+    font-size:12px;
+    color:#8f8b85;
+    line-height:1.8;
+}
+
+.code-box{
+    display:flex;
+    gap:9px;
+    margin-top:29px;
+}
+
+.code-input{
+    flex:1;
+    min-width:0;
+    height:48px;
+    background:rgba(255,255,255,.045);
+    border:1px solid rgba(255,255,255,.11);
+    color:#eee8dc;
+    text-align:center;
+    letter-spacing:8px;
+    font-size:16px;
+    outline:none;
+    transition:.25s;
+}
+
+.code-input:focus{
+    border-color:rgba(204,174,121,.65);
+    box-shadow:0 0 0 3px rgba(204,174,121,.06);
+}
+
+.enter-btn{
+    width:92px;
+    height:48px;
+    background:#c8ae82;
+    color:#17130f;
+    font-size:13px;
+    letter-spacing:1px;
+    transition:.25s;
+}
+
+.enter-btn:active{
+    transform:scale(.97);
+}
+
+.error{
+    min-height:20px;
+    margin-top:12px;
+    font-size:11px;
+    color:#b98b7f;
+}
+
+/* =========================
+   首页
+========================= */
+
+.hero{
+    padding-top:16vh;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-start;
+}
+
+.city-line{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    color:#8f8b83;
+    font-size:10px;
+    letter-spacing:4px;
+    margin-bottom:24px;
+}
+
+.city-line::before{
+    content:"";
+    width:28px;
+    height:1px;
+    background:#a88e68;
+}
+
+.hero-title{
+    font-family:
+        "Songti SC",
+        "STSong",
+        "SimSun",
+        serif;
+    font-weight:400;
+    font-size:39px;
+    line-height:1.25;
+    letter-spacing:-1px;
+}
+
+.hero-title span{
+    display:block;
+    color:#c9b28b;
+}
+
+.hero-desc{
+    margin-top:24px;
+    color:#aaa59c;
+    font-size:13px;
+    line-height:2;
+    max-width:330px;
+}
+
+.hero-rule{
+    width:100%;
+    height:1px;
+    margin:38px 0 25px;
+    background:
+        linear-gradient(
+            90deg,
+            rgba(201,177,139,.65),
+            rgba(201,177,139,.08),
+            transparent
+        );
+}
+
+.meta-row{
+    display:flex;
+    gap:25px;
+    color:#76736d;
+    font-size:10px;
+    letter-spacing:1px;
+}
+
+.start-btn{
+    width:100%;
+    height:54px;
+    margin-top:43px;
+    background:#c9b184;
+    color:#15120e;
+    letter-spacing:2px;
+    font-size:13px;
+    position:relative;
+    overflow:hidden;
+}
+
+.start-btn::after{
+    content:"";
+    position:absolute;
+    width:70px;
+    height:200%;
+    top:-50%;
+    left:-100px;
+    background:linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,.32),
+        transparent
+    );
+    transform:rotate(20deg);
+    transition:.7s;
+}
+
+.start-btn:hover::after{
+    left:120%;
+}
+
+.note{
+    margin-top:16px;
+    text-align:center;
+    font-size:10px;
+    color:#65625d;
+}
+
+/* =========================
+   测试页
+========================= */
+
+.quiz-page{
+    padding-top:30px;
+}
+
+.quiz-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    color:#77736d;
+    font-size:10px;
+    letter-spacing:2px;
+}
+
+.progress{
+    margin-top:16px;
+    height:2px;
+    width:100%;
+    background:rgba(255,255,255,.08);
+}
+
+.progress-bar{
+    width:0%;
+    height:100%;
+    background:#c7aa79;
+    transition:.4s ease;
+}
+
+.question-wrap{
+    padding-top:56px;
+}
+
+.question-label{
+    font-size:10px;
+    letter-spacing:4px;
+    color:#b39870;
+    margin-bottom:18px;
+}
+
+.question{
+    font-family:
+        "Songti SC",
+        "STSong",
+        "SimSun",
+        serif;
+    font-size:25px;
+    line-height:1.6;
+    font-weight:400;
+    letter-spacing:.3px;
+}
+
+.question-tip{
+    margin-top:13px;
+    color:#73706b;
+    font-size:11px;
+}
+
+.options{
+    margin-top:34px;
+    display:flex;
+    flex-direction:column;
+    gap:11px;
+}
+
+.option{
+    width:100%;
+    min-height:65px;
+    padding:15px 17px;
+    display:flex;
+    align-items:center;
+    text-align:left;
+    background:rgba(255,255,255,.035);
+    border:1px solid rgba(255,255,255,.085);
+    color:#d9d5ce;
+    transition:.25s;
+    position:relative;
+}
+
+.option:active{
+    transform:scale(.985);
+    background:rgba(201,177,132,.08);
+}
+
+.option-num{
+    width:27px;
+    height:27px;
+    flex:none;
+    border:1px solid rgba(198,169,120,.32);
+    color:#b99c6d;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-right:13px;
+    font-size:10px;
+}
+
+.option-text{
+    font-size:13px;
+    line-height:1.7;
+}
+
+.bottom-tip{
+    margin-top:30px;
+    text-align:center;
+    font-size:10px;
+    color:#57544f;
+}
+
+/* =========================
+   结果页
+========================= */
+
+.result-page{
+    min-height:100vh;
+    padding-top:25px;
+}
+
+.result-shell{
+    min-height:calc(100vh - 50px);
+    position:relative;
+    padding:20px 0 35px;
+}
+
+.result-bg{
+    position:absolute;
+    left:-20px;
+    right:-20px;
+    top:0;
+    height:410px;
+    opacity:.55;
+    pointer-events:none;
+}
+
+.result-content{
+    position:relative;
+    z-index:2;
+}
+
+.result-small{
+    color:#9a9184;
+    font-size:10px;
+    letter-spacing:4px;
+}
+
+.result-type{
+    margin-top:25px;
+    font-family:
+        "Songti SC",
+        "STSong",
+        "SimSun",
+        serif;
+    font-size:16px;
+    letter-spacing:3px;
+}
+
+.result-name{
+    margin-top:8px;
+    font-family:
+        "Songti SC",
+        "STSong",
+        "SimSun",
+        serif;
+    font-size:38px;
+    line-height:1.35;
+    font-weight:400;
+}
+
+.result-en{
+    margin-top:8px;
+    color:#77736e;
+    font-size:9px;
+    letter-spacing:4px;
+    text-transform:uppercase;
+}
+
+.result-line{
+    margin-top:27px;
+    width:52px;
+    height:2px;
+    background:#c3a878;
+}
+
+.result-keywords{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:23px;
+}
+
+.tag{
+    padding:7px 10px;
+    border:1px solid rgba(202,176,131,.22);
+    color:#a99c88;
+    font-size:10px;
+}
+
+.result-card{
+    margin-top:28px;
+    padding:23px 19px;
+    background:rgba(255,255,255,.035);
+    border:1px solid rgba(255,255,255,.08);
+    backdrop-filter:blur(10px);
+}
+
+.card-title{
+    color:#c3a878;
+    font-size:11px;
+    letter-spacing:3px;
+    margin-bottom:15px;
+}
+
+.result-desc{
+    color:#c9c5bd;
+    font-size:13px;
+    line-height:2;
+}
+
+.result-detail{
+    margin-top:22px;
+    padding-top:20px;
+    border-top:1px solid rgba(255,255,255,.07);
+    color:#918d87;
+    font-size:12px;
+    line-height:2;
+}
+
+.quote{
+    margin-top:26px;
+    padding:20px;
+    border-left:2px solid #b99a69;
+    background:rgba(198,166,113,.045);
+    color:#bcb5a9;
+    font-family:
+        "Songti SC",
+        "STSong",
+        "SimSun",
+        serif;
+    font-size:14px;
+    line-height:1.9;
+}
+
+.result-buttons{
+    display:flex;
+    gap:10px;
+    margin-top:28px;
+}
+
+.restart-btn,
+.share-btn{
+    flex:1;
+    height:48px;
+    font-size:12px;
+    letter-spacing:1px;
+}
+
+.restart-btn{
+    background:#c5aa7d;
+    color:#16120e;
+}
+
+.share-btn{
+    background:rgba(255,255,255,.045);
+    border:1px solid rgba(255,255,255,.1);
+    color:#b9b4ab;
+}
+
+/* =========================
+   八种结果主题
+========================= */
+
+.theme-protagonist .result-bg{
+    background:
+        radial-gradient(circle at 75% 20%,rgba(194,160,109,.25),transparent 35%),
+        linear-gradient(180deg,rgba(86,69,46,.18),transparent);
+}
+
+.theme-protagonist .result-name{
+    color:#dfc58f;
+}
+
+.theme-healing .result-bg{
+    background:
+        radial-gradient(circle at 20% 20%,rgba(118,145,130,.22),transparent 38%),
+        linear-gradient(180deg,rgba(54,76,67,.15),transparent);
+}
+
+.theme-healing .result-name{
+    color:#c2d0c4;
+}
+
+.theme-career .result-bg{
+    background:
+        radial-gradient(circle at 80% 18%,rgba(113,131,156,.22),transparent 40%),
+        linear-gradient(180deg,rgba(50,64,85,.17),transparent);
+}
+
+.theme-career .result-name{
+    color:#c4cfdf;
+}
+
+.theme-free .result-bg{
+    background:
+        radial-gradient(circle at 25% 16%,rgba(168,123,90,.23),transparent 38%),
+        linear-gradient(180deg,rgba(83,57,42,.15),transparent);
+}
+
+.theme-free .result-name{
+    color:#d8b495;
+}
+
+.theme-mysterious .result-bg{
+    background:
+        radial-gradient(circle at 75% 18%,rgba(114,99,145,.25),transparent 38%),
+        linear-gradient(180deg,rgba(55,45,78,.18),transparent);
+}
+
+.theme-mysterious .result-name{
+    color:#c8bce0;
+}
+
+.theme-social .result-bg{
+    background:
+        radial-gradient(circle at 25% 18%,rgba(164,111,111,.24),transparent 38%),
+        linear-gradient(180deg,rgba(77,44,48,.16),transparent);
+}
+
+.theme-social .result-name{
+    color:#d9b3b3;
+}
+
+.theme-family .result-bg{
+    background:
+        radial-gradient(circle at 78% 18%,rgba(171,144,103,.24),transparent 40%),
+        linear-gradient(180deg,rgba(75,60,40,.16),transparent);
+}
+
+.theme-family .result-name{
+    color:#d9c19a;
+}
+
+.theme-rebel .result-bg{
+    background:
+        radial-gradient(circle at 25% 15%,rgba(129,77,69,.27),transparent 40%),
+        linear-gradient(180deg,rgba(68,36,35,.17),transparent);
+}
+
+.theme-rebel .result-name{
+    color:#d7aaa0;
+}
+
+/* =========================
+   小屏适配
+========================= */
+
+@media(max-width:360px){
+    .page{
+        padding-left:17px;
+        padding-right:17px;
+    }
+
+    .hero-title{
+        font-size:34px;
+    }
+
+    .question{
+        font-size:22px;
+    }
+
+    .result-name{
+        font-size:34px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<!-- =========================
+     密码页
+========================= -->
+
+<section id="lockPage" class="page lock-page">
+    <div class="lock-card">
+
+        <div class="lock-mark">✦</div>
+
+        <div class="eyebrow">URBAN DRAMA TEST</div>
+
+        <h1 class="lock-title">
+            都市剧角色测试
+        </h1>
+
+        <p class="lock-subtitle">
+            输入提取码，开启你的都市剧本
+        </p>
+
+        <div class="code-box">
+            <input
+                id="codeInput"
+                class="code-input"
+                type="text"
+                inputmode="numeric"
+                maxlength="4"
+                placeholder="CODE"
+                autocomplete="off"
+            >
+            <button id="enterBtn" class="enter-btn">
+                进入
+            </button>
+        </div>
+
+        <div id="errorText" class="error"></div>
+
+    </div>
+</section>
+
+
+<!-- =========================
+     首页
+========================= -->
+
+<section id="homePage" class="page hero hidden">
+
+    <div class="city-line">
+        URBAN DRAMA · CHARACTER TEST
+    </div>
+
+    <h1 class="hero-title">
+        如果掉入
+        <span>都市剧</span>
+        你是什么角色？
+    </h1>
+
+    <p class="hero-desc">
+        有人适合站在聚光灯下，有人习惯藏在故事背后。
+        有人一路向上，有人更在意生活本身。
+        选出最接近你真实反应的答案，看看你的都市剧本会怎么展开。
+    </p>
+
+    <div class="hero-rule"></div>
+
+    <div class="meta-row">
+        <span>URBAN LIFE</span>
+        <span>CHARACTER</span>
+        <span>STORY</span>
+    </div>
+
+    <button id="startBtn" class="start-btn">
+        开始进入剧本
+    </button>
+
+    <div class="note">
+        不需要反复斟酌，第一反应通常最接近你。
+    </div>
+
+</section>
+
+
+<!-- =========================
+     测试页
+========================= -->
+
+<section id="quizPage" class="page quiz-page hidden">
+
+    <div class="quiz-top">
+        <span id="questionNumber">01 / 08</span>
+        <span>YOUR CHOICE</span>
+    </div>
+
+    <div class="progress">
+        <div id="progressBar" class="progress-bar"></div>
+    </div>
+
+    <div class="question-wrap">
+
+        <div id="questionLabel" class="question-label">
+            SCENE 01
+        </div>
+
+        <h2 id="questionText" class="question"></h2>
+
+        <div class="question-tip">
+            请选择最像你的一项
+        </div>
+
+        <div id="options" class="options"></div>
+
+        <div class="bottom-tip">
+            你的选择会逐渐拼出完整的人物画像
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     结果页
+========================= -->
+
+<section id="resultPage" class="page result-page hidden">
+
+    <div id="resultShell" class="result-shell">
+
+        <div class="result-bg"></div>
+
+        <div class="result-content">
+
+            <div class="result-small">
+                YOUR URBAN DRAMA ROLE
+            </div>
+
+            <div id="resultType" class="result-type"></div>
+
+            <h1 id="resultName" class="result-name"></h1>
+
+            <div id="resultEn" class="result-en"></div>
+
+            <div class="result-line"></div>
+
+            <div id="resultTags" class="result-keywords"></div>
+
+            <div class="result-card">
+
+                <div class="card-title">
+                    人物画像
+                </div>
+
+                <div id="resultDesc" class="result-desc"></div>
+
+                <div id="resultDetail" class="result-detail"></div>
+
+            </div>
+
+            <div id="resultQuote" class="quote"></div>
+
+            <div class="result-buttons">
+                <button id="restartBtn" class="restart-btn">
+                    再测一次
+                </button>
+
+                <button id="shareBtn" class="share-btn">
+                    分享结果
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+</div>
+<script>
+
+/* =====================================================
+   基础设置
+===================================================== */
+
+const ACCESS_CODE = "6564";
+
+
+/* =====================================================
+   题目
+===================================================== */
+
+const questions = [
+
+{
+    text:"周一早上，你刚到公司，就发现临时出了一个大问题，你第一反应是？",
+    options:[
+        "先把事情扛下来，边做边想办法解决",
+        "迅速梳理问题，找出最有效率的处理方式",
+        "先稳定大家的情绪，再一起想办法",
+        "先观察局面，确认到底发生了什么"
+    ]
+},
+
+{
+    text:"朋友突然在深夜给你发来一大段情绪，你会？",
+    options:[
+        "直接打电话过去，陪她聊到情绪平复",
+        "帮她分析事情，然后给出实际建议",
+        "安静听她说，不急着评价",
+        "告诉她先睡一觉，明天再处理"
+    ]
+},
+
+{
+    text:"如果你的工作能力被别人质疑，你通常会？",
+    options:[
+        "不解释，用最后的结果证明自己",
+        "当场说明自己的思路和依据",
+        "表面不在意，心里会默默记住",
+        "觉得没必要证明给所有人看"
+    ]
+},
+
+{
+    text:"周末突然空出一天，你最想怎么过？",
+    options:[
+        "约朋友吃饭、逛街、看电影",
+        "一个人去城市里随便走走",
+        "在家睡到自然醒，再慢慢做喜欢的事",
+        "临时买张票，去一个没去过的地方"
+    ]
+},
+
+{
+    text:"感情里出现矛盾时，你更接近哪一种？",
+    options:[
+        "不喜欢冷战，希望尽快把话说开",
+        "先冷静下来，想清楚问题在哪里",
+        "嘴上说没事，其实会想很多",
+        "如果对方一直让我失望，我会慢慢抽离"
+    ]
+},
+
+{
+    text:"如果你突然获得了一笔不错的收入，你更愿意？",
+    options:[
+        "存下来，为以后留一份安全感",
+        "投入提升自己，让未来有更多选择",
+        "带家人或朋友好好吃一顿",
+        "去完成一个一直想做却没做的计划"
+    ]
+},
+
+{
+    text:"在一群陌生人里，你通常是什么状态？",
+    options:[
+        "很快找到可以聊天的人",
+        "先观察，熟悉之后才会打开自己",
+        "谁需要帮助，我就会主动搭把手",
+        "不太在意融入，自己舒服就好"
+    ]
+},
+
+{
+    text:"如果这是你的人生电视剧，你最希望最后留下什么？",
+    options:[
+        "我努力过，也真正拥有过自己想要的生活",
+        "我一步一步成为了更厉害的人",
+        "我没有辜负爱我的人，也没有弄丢自己",
+        "哪怕绕了很多路，我依然活成了喜欢的样子"
+    ]
+}
+
+];
+
+
+/* =====================================================
+   八个结果
+===================================================== */
+
+const results = [
+
+{
+    id:0,
+    type:"都市主角",
+    name:"清醒成长型",
+    en:"THE PROTAGONIST",
+    theme:"theme-protagonist",
+    tags:["目标感强","自我驱动","越挫越稳"],
+    desc:"你很像都市剧里那个一路从普通人走到聚光灯中心的主角。你未必一开始就拥有最好的条件，但你有一种很明显的特质——遇到事情不会轻易把自己交给环境。",
+    detail:"你知道自己想要什么，也愿意为想要的生活付出时间。你并不需要所有人理解你的选择，比起漂亮的话，你更相信真实的行动。你的人生不会永远顺利，但每一次经历都会让你更清楚自己是谁。别人看到的是你的结果，而你知道自己经历过多少个无人看见的夜晚。",
+    quote:"“真正属于你的故事，不是别人替你写好的，而是你一次次选择之后留下来的。”"
+},
+
+{
+    id:1,
+    type:"职场精英",
+    name:"冷静掌局型",
+    en:"THE STRATEGIST",
+    theme:"theme-career",
+    tags:["理性清醒","执行力强","事业脑"],
+    desc:"如果你掉进都市剧，你大概率不是最吵闹的那个，却很可能是最后掌握主动权的人。你习惯先看全局，再决定自己应该往哪里走。",
+    detail:"面对工作和现实问题，你很少单纯依靠情绪。你会判断成本、机会和结果，也知道什么时候应该坚持，什么时候应该转身。你对自己的要求通常比别人对你的要求更高，因此外人看见的是你的从容，只有你自己知道，那份从容背后其实有非常强的自我要求。",
+    quote:"“不急着赢的人，往往已经开始计算下一局了。”"
+},
+
+{
+    id:2,
+    type:"温柔女主",
+    name:"治愈陪伴型",
+    en:"THE HEALER",
+    theme:"theme-healing",
+    tags:["共情力强","温柔坚定","重感情"],
+    desc:"你是都市剧里很容易让人产生好感的角色。你不一定永远站在故事最中央，但很多重要的人都会因为你的出现，慢慢变得柔软。",
+    detail:"你很擅长感知别人的情绪，也愿意给身边的人留空间。你不是没有脾气，而是知道什么值得计较，什么可以放下。真正熟悉你的人会发现，你的温柔并不软弱，你只是愿意在关系里多走一步。但当自己的底线被反复触碰时，你也会非常坚定地离开。",
+    quote:"“温柔不是退让，而是看清之后依然愿意善待生活。”"
+},
+
+{
+    id:3,
+    type:"自由女主",
+    name:"随性冒险型",
+    en:"THE FREE SPIRIT",
+    theme:"theme-free",
+    tags:["自由感强","行动派","不怕改变"],
+    desc:"你最像都市剧里那个永远不按常规路线生活的人。别人还在考虑值不值得，你可能已经买好了票，准备出发。",
+    detail:"你非常看重生活里的新鲜感和自由度，不喜欢被固定的模板框住。你可以认真工作，也可以突然去看一场凌晨的电影；可以计划未来，也接受临时改变方向。你不是没有责任感，而是希望自己的选择始终属于自己。对你来说，生活最怕的不是走错路，而是一直走一条自己并不喜欢的路。",
+    quote:"“人生这么长，总要给自己留一点随时转弯的勇气。”"
+},
+
+{
+    id:4,
+    type:"神秘配角",
+    name:"低调观察型",
+    en:"THE MYSTERIOUS ONE",
+    theme:"theme-mysterious",
+    tags:["敏锐细腻","慢热","有边界感"],
+    desc:"你很像都市剧里那个一开始存在感并不强，却会让观众越来越想了解的人。你不急着解释自己，也不会轻易把内心交出去。",
+    detail:"你拥有很强的观察力。很多别人没有注意到的细节，你其实早就看见了。你慢热，却并不冷漠；你安静，却拥有非常明确的判断。你更喜欢少而稳定的关系，也不喜欢把生活过成一场持续的社交表演。真正进入你世界的人，往往会发现你比表面看起来有趣得多。",
+    quote:"“不是所有故事，都需要第一集就让所有人看懂。”"
+},
+
+{
+    id:5,
+    type:"人间烟火担当",
+    name:"热情社交型",
+    en:"THE SOCIAL STAR",
+    theme:"theme-social",
+    tags:["感染力强","重朋友","会照顾人"],
+    desc:"你的都市剧不会缺少热闹。你是那种很容易把一群陌生人变成朋友的人，也是大家遇到事情时很自然会想到的那个角色。",
+    detail:"你很重视人与人之间的连接。你喜欢一起吃饭、聊天、旅行，也愿意为朋友花时间。你身上有很强的生活感，哪怕遇到糟糕的一天，也能努力给自己找一点快乐。你可能偶尔会因为太在意别人而忽略自己，所以你真正需要学会的，不是对所有人更好，而是也把自己放进需要被照顾的人名单里。",
+    quote:"“好的生活不是永远顺利，而是身边始终有人愿意一起吃饭。”"
+},
+
+{
+    id:6,
+    type:"家庭剧核心",
+    name:"稳定守护型",
+    en:"THE ANCHOR",
+    theme:"theme-family",
+    tags:["责任感强","可靠","重稳定"],
+    desc:"你很像都市剧里那个不太会说漂亮话，却总是在关键时候出现的人。你的存在感不一定最强，但你往往是别人最放心依靠的那一个。",
+    detail:"你对生活有很强的责任感。你会提前考虑未来，也会默默把很多事情安排好。你珍惜家人、朋友和长期关系，不喜欢轻易放弃一段真正重要的连接。你的安全感来自稳定和确定，但这并不代表你没有梦想。相反，你只是更希望自己的每一步都走得踏实。",
+    quote:"“真正的可靠，是很多年以后回头看，你依然在那里。”"
+},
+
+{
+    id:7,
+    type:"反套路女主",
+    name:"清醒叛逆型",
+    en:"THE REBEL",
+    theme:"theme-rebel",
+    tags:["边界清晰","敢于拒绝","不迎合"],
+    desc:"如果都市剧里出现一个完全不按别人期待生活的人，那很可能就是你。你不喜欢被定义，也不愿为了让别人满意而改变自己的选择。",
+    detail:"你有非常清晰的边界感。你可以听取建议，但最终一定会自己做决定。你知道生活不可能让所有人满意，所以比起迎合，你更在意自己是否舒服。你有时候看起来有些倔，但那份倔强其实来自你对自我价值的坚持。你不会为了得到所有人的认可，而牺牲真正重要的东西。",
+    quote:"“别人喜欢怎样的你，并不比你喜欢怎样的自己更重要。”"
+}
+
+];
+
+
+/* =====================================================
+   DOM
+===================================================== */
+
+const lockPage = document.getElementById("lockPage");
+const homePage = document.getElementById("homePage");
+const quizPage = document.getElementById("quizPage");
+const resultPage = document.getElementById("resultPage");
+
+const codeInput = document.getElementById("codeInput");
+const enterBtn = document.getElementById("enterBtn");
+const errorText = document.getElementById("errorText");
+
+const startBtn = document.getElementById("startBtn");
+
+const questionNumber = document.getElementById("questionNumber");
+const questionLabel = document.getElementById("questionLabel");
+const questionText = document.getElementById("questionText");
+const optionsBox = document.getElementById("options");
+const progressBar = document.getElementById("progressBar");
+
+const resultShell = document.getElementById("resultShell");
+const resultType = document.getElementById("resultType");
+const resultName = document.getElementById("resultName");
+const resultEn = document.getElementById("resultEn");
+const resultTags = document.getElementById("resultTags");
+const resultDesc = document.getElementById("resultDesc");
+const resultDetail = document.getElementById("resultDetail");
+const resultQuote = document.getElementById("resultQuote");
+
+const restartBtn = document.getElementById("restartBtn");
+const shareBtn = document.getElementById("shareBtn");
+
+
+/* =====================================================
+   状态
+===================================================== */
+
+let currentQuestion = 0;
+
+let scores = new Array(results.length).fill(0);
+
+
+/* =====================================================
+   每道题的分配矩阵
+   每个选项主推一个结果，同时给第二结果少量分数
+   通过八题覆盖全部角色
+===================================================== */
+
+const answerWeights = [
+
+    [
+        {0:4,1:1},
+        {1:4,7:1},
+        {2:4,6:1},
+        {4:4,3:1}
+    ],
+
+    [
+        {5:4,2:1},
+        {1:4,0:1},
+        {2:4,4:1},
+        {6:4,3:1}
+    ],
+
+    [
+        {0:4,7:1},
+        {1:4,4:1},
+        {4:4,2:1},
+        {7:4,3:1}
+    ],
+
+    [
+        {5:4,6:1},
+        {4:4,3:1},
+        {2:4,6:1},
+        {3:4,7:1}
+    ],
+
+    [
+        {5:4,2:1},
+        {1:4,4:1},
+        {2:4,0:1},
+        {7:4,3:1}
+    ],
+
+    [
+        {6:4,1:1},
+        {1:4,0:1},
+        {5:4,2:1},
+        {3:4,7:1}
+    ],
+
+    [
+        {5:4,2:1},
+        {4:4,1:1},
+        {2:4,5:1},
+        {3:4,7:1}
+    ],
+
+    [
+        {0:4,6:1},
+        {1:4,0:1},
+        {6:4,2:1},
+        {3:4,7:1}
+    ]
+
+];
+
+
+/* =====================================================
+   密码验证
+===================================================== */
+
+function enterTest(){
+
+    const value = codeInput.value.trim();
+
+    if(value === ACCESS_CODE){
+
+        errorText.textContent = "";
+
+        lockPage.classList.add("hidden");
+        homePage.classList.remove("hidden");
+
+        window.scrollTo(0,0);
+
+    }else{
+
+        errorText.textContent = "提取码不正确，请重新输入";
+
+        codeInput.value = "";
+
+        codeInput.focus();
+    }
+}
+
+enterBtn.addEventListener("click",enterTest);
+
+codeInput.addEventListener("keydown",function(e){
+
+    if(e.key === "Enter"){
+        enterTest();
+    }
+
+});
+
+
+/* =====================================================
+   开始测试
+===================================================== */
+
+startBtn.addEventListener("click",function(){
+
+    currentQuestion = 0;
+    scores = new Array(results.length).fill(0);
+
+    homePage.classList.add("hidden");
+    quizPage.classList.remove("hidden");
+
+    renderQuestion();
+
+    window.scrollTo({
+        top:0,
+        behavior:"instant"
+    });
+
+});
+
+
+/* =====================================================
+   渲染题目
+===================================================== */
+
+function renderQuestion(){
+
+    const q = questions[currentQuestion];
+
+    const number = String(currentQuestion + 1).padStart(2,"0");
+
+    questionNumber.textContent =
+        number + " / " + String(questions.length).padStart(2,"0");
+
+    questionLabel.textContent =
+        "SCENE " + number;
+
+    questionText.textContent = q.text;
+
+    progressBar.style.width =
+        ((currentQuestion) / questions.length * 100) + "%";
+
+    optionsBox.innerHTML = "";
+
+    q.options.forEach(function(option,index){
+
+        const btn = document.createElement("button");
+
+        btn.className = "option";
+
+        btn.innerHTML = `
+            <span class="option-num">
+                ${String.fromCharCode(65 + index)}
+            </span>
+            <span class="option-text">
+                ${option}
+            </span>
+        `;
+
+        btn.addEventListener("click",function(){
+
+            selectAnswer(index);
+
+        });
+
+        optionsBox.appendChild(btn);
+
+    });
+
+}
+
+
+/* =====================================================
+   选择答案
+===================================================== */
+
+function selectAnswer(index){
+
+    const weights = answerWeights[currentQuestion][index];
+
+    Object.keys(weights).forEach(function(key){
+
+        const resultIndex = Number(key);
+
+        scores[resultIndex] += weights[key];
+
+    });
+
+    currentQuestion++;
+
+    if(currentQuestion >= questions.length){
+
+        showResult();
+
+    }else{
+
+        renderQuestion();
+
+        window.scrollTo({
+            top:0,
+            behavior:"instant"
+        });
+
+    }
+
+}
+
+
+/* =====================================================
+   最终结果算法
+   最高分优先
+   同分时加入细微随机扰动
+   保证不会固定卡在某一个结果
+===================================================== */
+
+function getResult(){
+
+    let maxScore = Math.max(...scores);
+
+    let candidates = [];
+
+    scores.forEach(function(score,index){
+
+        if(score === maxScore){
+            candidates.push(index);
+        }
+
+    });
+
+    if(candidates.length === 1){
+        return candidates[0];
+    }
+
+    /*
+      同分时根据第二高分做一次比较
+    */
+
+    candidates.sort(function(a,b){
+
+        const aOthers = scores
+            .filter((_,i)=>i!==a)
+            .reduce((x,y)=>x+y,0);
+
+        const bOthers = scores
+            .filter((_,i)=>i!==b)
+            .reduce((x,y)=>x+y,0);
+
+        return bOthers - aOthers;
+
+    });
+
+    return candidates[0];
+
+}
+
+
+/* =====================================================
+   显示结果
+===================================================== */
+
+function showResult(){
+
+    const resultIndex = getResult();
+
+    const result = results[resultIndex];
+
+    resultPage.className =
+        "page result-page " + result.theme;
+
+    resultShell.className =
+        "result-shell " + result.theme;
+
+    resultType.textContent = result.type;
+
+    resultName.textContent = result.name;
+
+    resultEn.textContent = result.en;
+
+    resultTags.innerHTML = "";
+
+    result.tags.forEach(function(tag){
+
+        const span = document.createElement("span");
+
+        span.className = "tag";
+
+        span.textContent = tag;
+
+        resultTags.appendChild(span);
+
+    });
+
+    resultDesc.textContent = result.desc;
+
+    resultDetail.textContent = result.detail;
+
+    resultQuote.textContent = result.quote;
+
+    quizPage.classList.add("hidden");
+    resultPage.classList.remove("hidden");
+
+    window.scrollTo({
+        top:0,
+        behavior:"instant"
+    });
+
+}
+
+
+/* =====================================================
+   重新测试
+===================================================== */
+
+restartBtn.addEventListener("click",function(){
+
+    currentQuestion = 0;
+
+    scores = new Array(results.length).fill(0);
+
+    resultPage.classList.add("hidden");
+    quizPage.classList.remove("hidden");
+
+    renderQuestion();
+
+    window.scrollTo({
+        top:0,
+        behavior:"instant"
+    });
+
+});
+
+
+/* =====================================================
+   分享
+===================================================== */
+
+shareBtn.addEventListener("click",async function(){
+
+    const shareText =
+        "测一测｜如果掉入都市剧，你是什么剧本角色";
+
+    try{
+
+        if(navigator.share){
+
+            await navigator.share({
+                title:shareText,
+                text:"看看你会是哪一种都市剧角色"
+            });
+
+        }else{
+
+            await navigator.clipboard.writeText(
+                window.location.href
+            );
+
+            shareBtn.textContent = "链接已复制";
+
+            setTimeout(function(){
+
+                shareBtn.textContent = "分享结果";
+
+            },1600);
+
+        }
+
+    }catch(e){
+
+        /* 用户取消分享时不做任何处理 */
+
+    }
+
+});
+
+</script>
+
+</body>
+</html>
